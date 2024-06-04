@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { Button, FlatList, StyleSheet, View } from 'react-native';
 import GoalItem from './components/GoalItem';
-import GoalInpu from './components/GoalInpu';
+import GoalInput from './components/GoalInput';
 
 export default function App() {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [todoGoals, setTodoGoals] = useState([]);
 
   // 추가 버튼을 누르면 할 일 목록을 추가하는 함수
@@ -14,6 +15,7 @@ export default function App() {
       ...currentTodoGoals,
       { text: enteredGoalText, id: Math.random().toString() },
     ]);
+    // endAddGoalHandler();
     // setTodoGoals([...todoGoals, enteredGoalText]);
   };
 
@@ -23,9 +25,28 @@ export default function App() {
     });
   };
 
+  // 할 일 추가 모달을 띄워주는 함수
+  const startAddGoalhandler = () => {
+    setModalIsVisible(true);
+  };
+
+  const endAddGoalHandler = () => {
+    setModalIsVisible(false);
+  };
+
   return (
     <View style={styles.container}>
-      <GoalInpu onAddGoal={addGoalHandler} />
+      <Button
+        title='할 일 추가하려면 누르세요!'
+        color='#5e0acc'
+        onPress={startAddGoalhandler}
+      />
+      {/* modalIsVisible && 를 직접 구현할 필요 없음. */}
+      <GoalInput
+        visible={modalIsVisible}
+        onAddGoal={addGoalHandler}
+        onCancel={endAddGoalHandler}
+      />
       <View style={styles.goalsContainer}>
         {/*
           ScrollView는 전체 화면이 렌더링 될 때 안의 항목들을 전부 렌더링합니다.
@@ -58,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 50,
-    paddingHorizontal: 16,
+    paddingHorizntal: 16,
   },
   goalsContainer: {
     flex: 4,

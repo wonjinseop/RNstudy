@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Modal, StyleSheet, TextInput, View } from 'react-native';
+import {
+  Button,
+  Image,
+  Modal,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
 
 const GoalInput = ({ onAddGoal, onCancel, visible }) => {
   // 입력창의 상태를 관리하는 변수를 React에서 사용하는 useState 훅을 사용하여 선언.
@@ -19,6 +26,10 @@ const GoalInput = ({ onAddGoal, onCancel, visible }) => {
     // 조건부 렌더링을 직접 구현하지 않고 Modal의 visible props를 활용해서 모달을 열고 닫을 수 있음.
     <Modal visible={visible} animationType='slide'>
       <View style={styles.inputContainer}>
+        <Image
+          source={require('../assets/choonsik.gif')}
+          style={styles.image}
+        />
         <TextInput
           style={styles.textInput}
           placeholder='할 일을 입력하세요!'
@@ -49,6 +60,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     backgroundColor: '#311b6b',
+  },
+  image: {
+    width: 150,
+    height: 150,
+    margin: 20,
   },
   textInput: {
     borderWidth: 1,
